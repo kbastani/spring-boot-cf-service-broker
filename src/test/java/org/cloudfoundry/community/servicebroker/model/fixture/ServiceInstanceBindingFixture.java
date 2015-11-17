@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.cloudfoundry.community.servicebroker.catalog.ServiceInstance;
+import org.cloudfoundry.community.servicebroker.catalog.ServiceInstanceBinding;
 import org.cloudfoundry.community.servicebroker.model.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;

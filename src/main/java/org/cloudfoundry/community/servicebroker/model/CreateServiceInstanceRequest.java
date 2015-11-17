@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.cloudfoundry.community.servicebroker.catalog.ServiceDefinition;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.*;

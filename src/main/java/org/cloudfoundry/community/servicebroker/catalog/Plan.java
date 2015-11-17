@@ -1,14 +1,15 @@
-package org.cloudfoundry.community.servicebroker.model;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.hibernate.validator.constraints.NotEmpty;
+package org.cloudfoundry.community.servicebroker.catalog;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import lombok.Data;
+import org.hibernate.validator.constraints.NotEmpty;
+
+import javax.persistence.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A service plan available for a ServiceDefinition
@@ -17,11 +18,14 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
  */
 @JsonAutoDetect(getterVisibility = JsonAutoDetect.Visibility.NONE)
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Entity
+@Data
 public class Plan {
 
 	@NotEmpty
 	@JsonSerialize
 	@JsonProperty("id")
+    @Id
 	private String id;
 	
 	@NotEmpty
@@ -36,6 +40,7 @@ public class Plan {
 	
 	@JsonSerialize
 	@JsonProperty("metadata")
+    @Transient
 	private Map<String,Object> metadata = new HashMap<String,Object>();
 	
 	@JsonSerialize

@@ -1,4 +1,4 @@
-package org.cloudfoundry.community.servicebroker.model;
+package org.cloudfoundry.community.servicebroker.catalog;
 
 import java.util.HashMap;
 import java.util.Map;

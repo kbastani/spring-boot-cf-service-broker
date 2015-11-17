@@ -3,7 +3,7 @@ package org.cloudfoundry.community.servicebroker.model.fixture;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.cloudfoundry.community.servicebroker.model.ServiceDefinition;
+import org.cloudfoundry.community.servicebroker.catalog.ServiceDefinition;
 
 public class ServiceFixture {
 

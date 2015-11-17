@@ -1,16 +1,18 @@
 package org.cloudfoundry.community.servicebroker.service.impl;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import org.cloudfoundry.community.servicebroker.catalog.Catalog;
+import org.cloudfoundry.community.servicebroker.catalog.ServiceDefinition;
+import org.cloudfoundry.community.servicebroker.repositories.ServiceDefinitionRepository;
+import org.cloudfoundry.community.servicebroker.service.BeanCatalogService;
+import org.junit.Before;
+import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.cloudfoundry.community.servicebroker.model.Catalog;
-import org.cloudfoundry.community.servicebroker.model.ServiceDefinition;
-import org.cloudfoundry.community.servicebroker.service.BeanCatalogService;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 public class BeanCatalogServiceTest {
 
@@ -18,6 +20,10 @@ public class BeanCatalogServiceTest {
 	
 	private Catalog catalog;
 	private ServiceDefinition serviceDefinition;
+
+    @Autowired
+    private ServiceDefinitionRepository serviceDefinitionRepository;
+
 	private static final String SVC_DEF_ID = "svc-def-id";
 	
 	@Before
@@ -26,7 +32,7 @@ public class BeanCatalogServiceTest {
 		List<ServiceDefinition> defs = new ArrayList<ServiceDefinition>();
 		defs.add(serviceDefinition);
 		catalog = new Catalog(defs);	
-		service = new BeanCatalogService(catalog);
+		service = new BeanCatalogService(catalog, serviceDefinitionRepository);
 	}
 	
 	@Test

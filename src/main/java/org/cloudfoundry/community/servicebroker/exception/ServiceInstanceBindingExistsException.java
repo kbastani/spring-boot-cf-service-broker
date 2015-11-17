@@ -1,6 +1,6 @@
 package org.cloudfoundry.community.servicebroker.exception;
 
-import org.cloudfoundry.community.servicebroker.model.ServiceInstanceBinding;
+import org.cloudfoundry.community.servicebroker.catalog.ServiceInstanceBinding;
 
 /**
  * Thrown when a duplicate request to bind to a service instance is 

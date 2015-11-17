@@ -1,10 +1,8 @@
 package org.cloudfoundry.community.servicebroker.service;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.cloudfoundry.community.servicebroker.model.Catalog;
-import org.cloudfoundry.community.servicebroker.model.ServiceDefinition;
+import org.cloudfoundry.community.servicebroker.catalog.Catalog;
+import org.cloudfoundry.community.servicebroker.catalog.ServiceDefinition;
+import org.cloudfoundry.community.servicebroker.repositories.ServiceDefinitionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -17,28 +15,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class BeanCatalogService implements CatalogService {
 
 	private Catalog catalog;
-	private Map<String,ServiceDefinition> serviceDefs = new HashMap<String,ServiceDefinition>();
-	
+    private ServiceDefinitionRepository serviceDefinitionRepository;
+
 	@Autowired
-	public BeanCatalogService(Catalog catalog) {
+	public BeanCatalogService(Catalog catalog, ServiceDefinitionRepository serviceDefinitionRepository) {
 		this.catalog = catalog;
-		initializeMap();
+        this.serviceDefinitionRepository = serviceDefinitionRepository;
 	}
-	
-	private void initializeMap() {
-		for (ServiceDefinition def: catalog.getServiceDefinitions()) {
-			serviceDefs.put(def.getId(), def);
-		}
-	}
-	
+
 	@Override
 	public Catalog getCatalog() {
+        catalog.getServiceDefinitions();
 		return catalog;
 	}
 
 	@Override
 	public ServiceDefinition getServiceDefinition(String serviceId) {
-		return serviceDefs.get(serviceId);
+		return serviceDefinitionRepository.findOne(serviceId);
 	}
 
 }

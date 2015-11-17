@@ -1,14 +1,16 @@
 package org.cloudfoundry.community.servicebroker.model.fixture;
 
+import org.cloudfoundry.community.servicebroker.catalog.Plan;
+import org.cloudfoundry.community.servicebroker.catalog.ServiceDefinition;
+import org.cloudfoundry.community.servicebroker.catalog.ServiceInstance;
+import org.cloudfoundry.community.servicebroker.model.CreateServiceInstanceRequest;
+import org.cloudfoundry.community.servicebroker.model.CreateServiceInstanceResponse;
+import org.cloudfoundry.community.servicebroker.model.UpdateServiceInstanceRequest;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.cloudfoundry.community.servicebroker.model.CreateServiceInstanceRequest;
-import org.cloudfoundry.community.servicebroker.model.CreateServiceInstanceResponse;
-import org.cloudfoundry.community.servicebroker.model.ServiceDefinition;
-import org.cloudfoundry.community.servicebroker.model.ServiceInstance;
-import org.cloudfoundry.community.servicebroker.model.UpdateServiceInstanceRequest;
+import java.util.stream.Collectors;
 
 public class ServiceInstanceFixture {
 
@@ -47,7 +49,7 @@ public class ServiceInstanceFixture {
 		ServiceDefinition service = ServiceFixture.getService();
 		return new CreateServiceInstanceRequest(
 				service.getId(), 
-				service.getPlans().get(0).getId(),
+                ((Plan)(service.getPlans().stream().collect(Collectors.toList()).get(0))).getId(),
 				DataFixture.getOrgOneGuid(),
 				DataFixture.getSpaceOneGuid(),
 				ParametersFixture.getParameters()
@@ -68,7 +70,7 @@ public class ServiceInstanceFixture {
 	
 	public static UpdateServiceInstanceRequest getUpdateServiceInstanceRequest() {
 		ServiceDefinition service = ServiceFixture.getService();
-		return new UpdateServiceInstanceRequest(service.getPlans().get(0).getId());
+		return new UpdateServiceInstanceRequest(((Plan)(service.getPlans().stream().collect(Collectors.toList()).get(0))).getId());
 	}
 
 

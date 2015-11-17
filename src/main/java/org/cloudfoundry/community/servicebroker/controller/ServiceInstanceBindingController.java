@@ -4,6 +4,8 @@ package org.cloudfoundry.community.servicebroker.controller;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.cloudfoundry.community.servicebroker.catalog.ServiceInstance;
+import org.cloudfoundry.community.servicebroker.catalog.ServiceInstanceBinding;
 import org.cloudfoundry.community.servicebroker.exception.ServiceBrokerException;
 import org.cloudfoundry.community.servicebroker.exception.ServiceInstanceBindingExistsException;
 import org.cloudfoundry.community.servicebroker.exception.ServiceInstanceDoesNotExistException;

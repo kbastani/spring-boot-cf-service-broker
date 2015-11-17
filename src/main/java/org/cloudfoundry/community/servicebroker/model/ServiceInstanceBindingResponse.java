@@ -1,14 +1,14 @@
 package org.cloudfoundry.community.servicebroker.model;
 
-import java.util.Map;
-
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import org.hibernate.validator.constraints.NotEmpty;
-
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import org.cloudfoundry.community.servicebroker.catalog.ServiceInstanceBinding;
+import org.hibernate.validator.constraints.NotEmpty;
+
+import java.util.Map;
 
 /**
  * The response sent to the cloud controller when a bind

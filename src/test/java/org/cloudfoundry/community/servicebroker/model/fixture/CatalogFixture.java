@@ -1,6 +1,6 @@
 package org.cloudfoundry.community.servicebroker.model.fixture;
 
-import org.cloudfoundry.community.servicebroker.model.Catalog;
+import org.cloudfoundry.community.servicebroker.catalog.Catalog;
 
 public class CatalogFixture {
 

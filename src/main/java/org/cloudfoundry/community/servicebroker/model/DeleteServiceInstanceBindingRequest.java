@@ -1,5 +1,7 @@
 package org.cloudfoundry.community.servicebroker.model;
 
+import org.cloudfoundry.community.servicebroker.catalog.ServiceInstance;
+
 /**
  *  A request sent by the cloud controller to remove a binding
  *  of a service.

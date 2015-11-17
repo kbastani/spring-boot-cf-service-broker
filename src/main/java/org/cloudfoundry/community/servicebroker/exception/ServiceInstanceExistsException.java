@@ -1,6 +1,6 @@
 package org.cloudfoundry.community.servicebroker.exception;
 
-import org.cloudfoundry.community.servicebroker.model.ServiceInstance;
+import org.cloudfoundry.community.servicebroker.catalog.ServiceInstance;
 
 /**
  * Thrown when a duplicate service instance creation request is

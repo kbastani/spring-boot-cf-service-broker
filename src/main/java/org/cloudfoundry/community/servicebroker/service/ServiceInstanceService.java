@@ -1,5 +1,6 @@
 package org.cloudfoundry.community.servicebroker.service;
 
+import org.cloudfoundry.community.servicebroker.catalog.ServiceInstance;
 import org.cloudfoundry.community.servicebroker.exception.ServiceBrokerException;
 import org.cloudfoundry.community.servicebroker.exception.ServiceInstanceDoesNotExistException;
 import org.cloudfoundry.community.servicebroker.exception.ServiceInstanceExistsException;
@@ -20,7 +21,7 @@ public interface ServiceInstanceService {
 	 * @throws ServiceInstanceExistsException if the service instance already exists.
 	 * @throws ServiceBrokerException if something goes wrong internally
 	 */
-	ServiceInstance createServiceInstance(CreateServiceInstanceRequest createServiceInstanceRequest) 
+	ServiceInstance createServiceInstance(CreateServiceInstanceRequest createServiceInstanceRequest)
 			throws ServiceInstanceExistsException, ServiceBrokerException;
 	
 	/**

@@ -1,7 +1,7 @@
 package org.cloudfoundry.community.servicebroker.service;
 
-import org.cloudfoundry.community.servicebroker.model.Catalog;
-import org.cloudfoundry.community.servicebroker.model.ServiceDefinition;
+import org.cloudfoundry.community.servicebroker.catalog.Catalog;
+import org.cloudfoundry.community.servicebroker.catalog.ServiceDefinition;
 
 /**
  * Handles the catalog of services made available by this 

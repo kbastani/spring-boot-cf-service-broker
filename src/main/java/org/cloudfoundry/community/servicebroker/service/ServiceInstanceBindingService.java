@@ -1,5 +1,6 @@
 package org.cloudfoundry.community.servicebroker.service;
 
+import org.cloudfoundry.community.servicebroker.catalog.ServiceInstanceBinding;
 import org.cloudfoundry.community.servicebroker.exception.ServiceBrokerException;
 import org.cloudfoundry.community.servicebroker.exception.ServiceInstanceBindingExistsException;
 import org.cloudfoundry.community.servicebroker.model.*;

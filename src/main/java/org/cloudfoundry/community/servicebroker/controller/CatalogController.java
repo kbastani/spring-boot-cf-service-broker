@@ -1,6 +1,6 @@
 package org.cloudfoundry.community.servicebroker.controller;
 
-import org.cloudfoundry.community.servicebroker.model.Catalog;
+import org.cloudfoundry.community.servicebroker.catalog.Catalog;
 import org.cloudfoundry.community.servicebroker.service.CatalogService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

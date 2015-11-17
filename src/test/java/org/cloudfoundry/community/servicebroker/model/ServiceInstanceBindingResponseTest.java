@@ -2,6 +2,7 @@ package org.cloudfoundry.community.servicebroker.model;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import org.cloudfoundry.community.servicebroker.catalog.ServiceInstanceBinding;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;

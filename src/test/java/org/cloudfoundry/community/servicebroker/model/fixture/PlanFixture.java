@@ -1,17 +1,18 @@
 package org.cloudfoundry.community.servicebroker.model.fixture;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.cloudfoundry.community.servicebroker.catalog.Plan;
 
-import org.cloudfoundry.community.servicebroker.model.Plan;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 
 public class PlanFixture {
 
-	public static List<Plan> getAllPlans() {
+	public static HashSet<Plan> getAllPlans() {
 		List<Plan> plans = new ArrayList<Plan>();
 		plans.add(getPlanOne());
 		plans.add(getPlanTwo());
-		return plans;
+		return new HashSet<>(plans);
 	}
 		
 	public static Plan getPlanOne() {

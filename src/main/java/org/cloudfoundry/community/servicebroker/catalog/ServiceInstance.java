@@ -1,8 +1,11 @@
-package org.cloudfoundry.community.servicebroker.model;
+package org.cloudfoundry.community.servicebroker.catalog;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import org.cloudfoundry.community.servicebroker.model.CreateServiceInstanceRequest;
+import org.cloudfoundry.community.servicebroker.model.DeleteServiceInstanceRequest;
+import org.cloudfoundry.community.servicebroker.model.UpdateServiceInstanceRequest;
 
 
 /**
@@ -38,7 +41,6 @@ public class ServiceInstance {
 	@JsonProperty("dashboard_url")
 	private String dashboardUrl;
 
-	@SuppressWarnings("unused")
 	private ServiceInstance() {}
 	
 	/**
@@ -61,7 +63,7 @@ public class ServiceInstance {
 	 * ServiceInstance.
 	 * @param request containing details of ServiceInstance
 	 */
-	public ServiceInstance(DeleteServiceInstanceRequest request) { 
+	public ServiceInstance(DeleteServiceInstanceRequest request) {
 		this.serviceInstanceId = request.getServiceInstanceId();
 		this.planId = request.getPlanId();
 		this.serviceDefinitionId = request.getServiceId();
@@ -73,7 +75,7 @@ public class ServiceInstance {
 	 * ServiceInstance.
 	 * @param request containing details of ServiceInstance
 	 */
-	public ServiceInstance(UpdateServiceInstanceRequest request) { 
+	public ServiceInstance(UpdateServiceInstanceRequest request) {
 		request.getPlanId();
 		request.getServiceInstanceId();
 	}

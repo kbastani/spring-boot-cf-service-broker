@@ -25,7 +25,7 @@ public class BeanCatalogService implements CatalogService {
 
 	@Override
 	public Catalog getCatalog() {
-        catalog.getServiceDefinitions();
+        catalog.getServices();
 		return catalog;
 	}
 

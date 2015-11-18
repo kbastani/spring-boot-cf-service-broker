@@ -9,9 +9,9 @@ The goal is to provide a [Spring Boot](http://projects.spring.io/spring-boot/) p
 
 ## Compatibility
 
-* [service broker API](http://docs.cloudfoundry.org/services/api.html): 2.4
-* [cf-release](https://github.com/cloudfoundry/cf-release): 192 or later
-* [Pivotal CF](http://www.pivotal.io/platform-as-a-service/pivotal-cf): Expected 1.4
+* [service broker API](http://docs.cloudfoundry.org/services/api.html): 2.7
+* [cf-release](https://github.com/cloudfoundry/cf-release): 225 or later
+* [Pivotal CF](http://www.pivotal.io/platform-as-a-service/pivotal-cf): Expected 1.6
 
 # Getting Started
 

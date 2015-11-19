@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * See: Source: http://docs.cloudfoundry.com/docs/running/architecture/services/writing-service.html
@@ -67,7 +69,7 @@ public class ServiceInstanceBindingController extends BaseController {
     }
 
     @RequestMapping(value = BASE_PATH + "/{bindingId}", method = RequestMethod.DELETE)
-    public ResponseEntity<String> deleteServiceInstanceBinding(
+    public ResponseEntity<?> deleteServiceInstanceBinding(
             @PathVariable("instanceId") String instanceId,
             @PathVariable("bindingId") String bindingId,
             @RequestParam("service_id") String serviceId,
@@ -84,10 +86,10 @@ public class ServiceInstanceBindingController extends BaseController {
         ServiceInstanceBinding binding = serviceInstanceBindingService.deleteServiceInstanceBinding(
                 new DeleteServiceInstanceBindingRequest(bindingId, instance, serviceId, planId));
         if (binding == null) {
-            return new ResponseEntity<String>("{}", HttpStatus.GONE);
+            return new ResponseEntity<Map>(new HashMap<>(), HttpStatus.GONE);
         }
         logger.debug("ServiceInstanceBinding Deleted: " + binding.getId());
-        return new ResponseEntity<String>("{}", HttpStatus.OK);
+        return new ResponseEntity<Map>(new HashMap<>(), HttpStatus.OK);
     }
 
     @ExceptionHandler(ServiceInstanceDoesNotExistException.class)

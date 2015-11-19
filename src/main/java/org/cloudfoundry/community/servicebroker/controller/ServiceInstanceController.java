@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * See: http://docs.cloudfoundry.com/docs/running/architecture/services/writing-service.html
@@ -95,14 +97,14 @@ public class ServiceInstanceController extends BaseController {
         ServiceInstance instance = service.deleteServiceInstance(
                 new DeleteServiceInstanceRequest(instanceId, serviceId, planId));
         if (instance == null) {
-            return new ResponseEntity<String>("{}", HttpStatus.GONE);
+            return new ResponseEntity<Map>(new HashMap<>(), HttpStatus.GONE);
         }
         logger.debug("ServiceInstance Deleted: " + instance.getServiceInstanceId());
-        return new ResponseEntity<String>("{}", HttpStatus.OK);
+        return new ResponseEntity<Map>(new HashMap<>(), HttpStatus.OK);
     }
 
     @RequestMapping(value = BASE_PATH + "/{instanceId}", method = RequestMethod.PATCH)
-    public ResponseEntity<String> updateServiceInstance(
+    public ResponseEntity<?> updateServiceInstance(
             @PathVariable("instanceId") String instanceId,
             @Valid @RequestBody UpdateServiceInstanceRequest request) throws
             ServiceInstanceUpdateNotSupportedException,
@@ -114,7 +116,7 @@ public class ServiceInstanceController extends BaseController {
                 + request.getPlanId());
         ServiceInstance instance = service.updateServiceInstance(request.withInstanceId(instanceId));
         logger.debug("ServiceInstance updated: " + instance.getServiceInstanceId());
-        return new ResponseEntity<String>("{}", HttpStatus.OK);
+        return new ResponseEntity<Map>(new HashMap<>(), HttpStatus.OK);
     }
 
 

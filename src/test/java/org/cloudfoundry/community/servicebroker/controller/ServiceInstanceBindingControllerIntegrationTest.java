@@ -1,25 +1,35 @@
 package org.cloudfoundry.community.servicebroker.controller;
 
-import static org.hamcrest.Matchers.*;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
 import org.cloudfoundry.community.servicebroker.catalog.ServiceInstance;
 import org.cloudfoundry.community.servicebroker.catalog.ServiceInstanceBinding;
 import org.cloudfoundry.community.servicebroker.exception.ServiceInstanceBindingExistsException;
-import org.cloudfoundry.community.servicebroker.model.*;
-import org.cloudfoundry.community.servicebroker.model.fixture.*;
-import org.cloudfoundry.community.servicebroker.service.*;
-import org.junit.*;
-import org.mockito.*;
+import org.cloudfoundry.community.servicebroker.model.CreateServiceInstanceBindingRequest;
+import org.cloudfoundry.community.servicebroker.model.DeleteServiceInstanceBindingRequest;
+import org.cloudfoundry.community.servicebroker.model.fixture.ServiceInstanceBindingFixture;
+import org.cloudfoundry.community.servicebroker.model.fixture.ServiceInstanceFixture;
+import org.cloudfoundry.community.servicebroker.service.ServiceInstanceBindingService;
+import org.cloudfoundry.community.servicebroker.service.ServiceInstanceService;
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import java.util.HashMap;
+
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.is;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 public class ServiceInstanceBindingControllerIntegrationTest {
 
@@ -171,7 +181,7 @@ public class ServiceInstanceBindingControllerIntegrationTest {
 			)
 			.andExpect(status().isOk())
 			.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-			.andExpect(jsonPath("$", is("{}"))
+			.andExpect(jsonPath("$", is(new HashMap<>()))
 		);
 	}
 
@@ -194,7 +204,7 @@ public class ServiceInstanceBindingControllerIntegrationTest {
 				.accept(MediaType.APPLICATION_JSON)
 			)
 			.andExpect(status().isGone())
-			.andExpect(jsonPath("$", is("{}")));
+			.andExpect(jsonPath("$", is(new HashMap<>())));
 	}
 	
 	@Test

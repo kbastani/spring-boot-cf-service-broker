@@ -1,5 +1,6 @@
 package org.cloudfoundry.community.servicebroker.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.cloudfoundry.community.servicebroker.catalog.Catalog;
 import org.cloudfoundry.community.servicebroker.service.CatalogService;
 import org.slf4j.Logger;
@@ -11,6 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * See: Source: http://docs.cloudfoundry.com/docs/running/architecture/services/writing-service.html
@@ -25,10 +30,12 @@ public class CatalogController extends BaseController {
     private static final Logger logger = LoggerFactory.getLogger(CatalogController.class);
 
     private CatalogService service;
+    private ObjectMapper objectMapper;
 
     @Autowired
-    public CatalogController(CatalogService service) {
+    public CatalogController(CatalogService service, ObjectMapper objectMapper) {
         this.service = service;
+        this.objectMapper = objectMapper;
     }
 
     @ResponseBody
@@ -40,8 +47,8 @@ public class CatalogController extends BaseController {
 
     @ResponseBody
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public ResponseEntity<String> getIndex() {
-        return new ResponseEntity<>("{ \"status\": \"UP\" }", HttpStatus.OK);
+    public ResponseEntity<Map> getIndex() throws IOException {
+        return new ResponseEntity<Map>(objectMapper.readValue("{ \"status\": \"UP\" }", HashMap.class), HttpStatus.OK);
     }
 
 }

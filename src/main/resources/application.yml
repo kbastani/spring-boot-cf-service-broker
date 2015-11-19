@@ -3,20 +3,8 @@ spring:
     active: cloud
   application:
     name: spring-cloud-service-broker
-
 management:
   contextPath: /management
-
-cloudfoundry:
-  apiEndpoint: http://api.bosh-lite.com   # Location of the CloudFoundry REST API endpoint to use.
-  domain: bosh-lite.com                    # The domain to use when mapping routes for applications.
-  organization: kbastani                   # The organization to use when registering new applications.
-  password: admin                          # Password to use to authenticate against the Cloud Foundry API.
-  services: redis                          # The names of services to bind to each application deployed as a module.
-  skipSslValidation: true                  # Allow operation using self-signed certificates.
-  space: ${vcap.application.space_name:development}   # The space to use when registering new applications.
-  username: admin                          # Username to use to authenticate against the Cloud Foundry API.
-
 security:
   basic:
     enabled: true
@@ -24,11 +12,17 @@ security:
 spring:
   profiles: cloud
   jpa:
-    database: H2
     hibernate:
       ddl-auto: create
-  datasource:
-    url: "jdbc:h2:mem:db"
+cloudfoundry:
+  apiEndpoint: http://api.bosh-lite.com    # Location of the CloudFoundry REST API endpoint to use.
+  domain: bosh-lite.com                    # The domain to use when mapping routes for applications.
+  organization: org                        # The organization to use when registering new applications.
+  password: admin                          # Password to use to authenticate against the Cloud Foundry API.
+  services: redis                          # The names of services to bind to each application deployed as a module.
+  skipSslValidation: true                  # Allow operation using self-signed certificates.
+  space: ${vcap.application.space_name:development}   # The space to use when registering new applications.
+  username: admin                          # Username to use to authenticate against the Cloud Foundry API.
 ---
 spring:
   profiles: test

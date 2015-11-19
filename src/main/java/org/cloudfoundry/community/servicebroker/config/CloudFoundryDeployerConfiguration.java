@@ -1,13 +1,12 @@
 package org.cloudfoundry.community.servicebroker.config;
 
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.cloud.dataflow.module.deployer.ModuleDeployer;
 import org.springframework.cloud.dataflow.module.deployer.cloudfoundry.CloudFoundryModuleDeployerConfiguration;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 @Configuration
-@ConditionalOnMissingBean(ModuleDeployer.class)
+@Profile("cloud")
 @EnableConfigurationProperties
 public class CloudFoundryDeployerConfiguration extends CloudFoundryModuleDeployerConfiguration {
 }

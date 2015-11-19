@@ -1,0 +1,11 @@
+---
+applications:
+- name: scheduler-broker
+  memory: 600M
+  instances: 1
+  buildpack: java-buildpack
+  timeout: 180
+  host: scheduler-broker
+  domain: bosh-lite.com
+  services:
+    - scheduler-db

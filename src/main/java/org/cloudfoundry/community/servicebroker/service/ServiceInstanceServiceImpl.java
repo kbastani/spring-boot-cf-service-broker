@@ -41,7 +41,6 @@ public class ServiceInstanceServiceImpl implements ServiceInstanceService {
     public ServiceInstance createServiceInstance(CreateServiceInstanceRequest createServiceInstanceRequest) throws ServiceInstanceExistsException, ServiceBrokerException {
         ServiceInstance serviceInstance = new ServiceInstance(createServiceInstanceRequest);
 
-
         if (serviceInstanceRepository.exists(serviceInstance.getServiceInstanceId()))
             throw new ServiceInstanceExistsException(serviceInstance);
 
@@ -122,7 +121,6 @@ public class ServiceInstanceServiceImpl implements ServiceInstanceService {
         } else {
             serviceInstance = serviceInstanceRepository.getOne(updateServiceInstanceRequest.getServiceInstanceId());
         }
-
 
         if (planRepository.exists(serviceInstance.getPlanId())) {
             serviceInstance.setPlanId(updateServiceInstanceRequest.getPlanId());

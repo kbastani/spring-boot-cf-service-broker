@@ -3,6 +3,7 @@ package org.cloudfoundry.community.servicebroker.model;
 import java.io.Serializable;
 
 public class ServiceInstanceStateResponse implements Serializable {
+
     private String state;
     private String description;
 

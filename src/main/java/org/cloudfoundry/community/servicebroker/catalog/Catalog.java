@@ -13,7 +13,7 @@ import java.util.List;
  * The catalog of services offered by this broker.
  *
  * @author sgreenberg@gopivotal.com
- * @author Kenny Bastani
+ * @author kbastani
  */
 @Service
 public class Catalog implements Serializable {
@@ -43,5 +43,28 @@ public class Catalog implements Serializable {
         } else {
             this.services = services;
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Catalog catalog = (Catalog) o;
+
+        return !(services != null ? !services.equals(catalog.services) : catalog.services != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return services != null ? services.hashCode() : 0;
+    }
+
+    @Override
+    public String toString() {
+        return "Catalog{" +
+                "services=" + services +
+                '}';
     }
 }

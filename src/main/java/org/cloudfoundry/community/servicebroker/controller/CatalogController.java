@@ -1,7 +1,6 @@
 package org.cloudfoundry.community.servicebroker.controller;
 
 import org.cloudfoundry.community.servicebroker.catalog.Catalog;
-import org.cloudfoundry.community.servicebroker.catalog.Plan;
 import org.cloudfoundry.community.servicebroker.service.CatalogService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,14 +34,14 @@ public class CatalogController extends BaseController {
     @ResponseBody
     @RequestMapping(value = BASE_PATH, method = RequestMethod.GET)
     public Catalog getCatalog() {
-        //logger.debug("GET: " + BASE_PATH + ", getCatalog()");
+        logger.debug("GET: " + BASE_PATH + ", getCatalog()");
         return service.getCatalog();
     }
 
     @ResponseBody
-    @RequestMapping(value = "/", method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity getIndex() {
-        return new ResponseEntity<>(new Plan(null, null, "Scheduler service broker"), HttpStatus.OK);
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public ResponseEntity<String> getIndex() {
+        return new ResponseEntity<>("{ \"status\": \"UP\" }", HttpStatus.OK);
     }
 
 }

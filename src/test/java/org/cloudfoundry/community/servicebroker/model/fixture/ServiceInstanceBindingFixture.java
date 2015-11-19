@@ -1,14 +1,13 @@
 package org.cloudfoundry.community.servicebroker.model.fixture;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.cloudfoundry.community.servicebroker.catalog.ServiceInstance;
+import org.cloudfoundry.community.servicebroker.catalog.ServiceInstanceBinding;
+import org.cloudfoundry.community.servicebroker.model.CreateServiceInstanceBindingRequest;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.cloudfoundry.community.servicebroker.catalog.ServiceInstance;
-import org.cloudfoundry.community.servicebroker.catalog.ServiceInstanceBinding;
-import org.cloudfoundry.community.servicebroker.model.*;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class ServiceInstanceBindingFixture {
 
@@ -27,9 +26,10 @@ public class ServiceInstanceBindingFixture {
 		return "service_instance_binding_id";
 	}
 	
-	public static Map<String,Object> getCredentials() {
-		Map<String,Object> credentials = new HashMap<String,Object>();
-		credentials.put("uri","uri");
+	public static Map<String,String> getCredentials() {
+		Map<String,String> credentials;
+        credentials = new HashMap<>();
+        credentials.put("uri","uri");
 		credentials.put("username", "username");
 		credentials.put("password", "password");
 		return credentials;

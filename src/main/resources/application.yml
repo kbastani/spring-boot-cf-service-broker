@@ -10,3 +10,12 @@ spring:
       ddl-auto: create
   datasource:
     url: "jdbc:h2:mem:db"
+---
+spring:
+  profiles: test
+  jpa:
+    database: H2
+    hibernate:
+      ddl-auto: create
+  datasource:
+    url: "jdbc:h2:mem:db"

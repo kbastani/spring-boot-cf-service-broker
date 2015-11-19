@@ -1,12 +1,7 @@
 package org.cloudfoundry.community.servicebroker.model;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.cloudfoundry.community.servicebroker.catalog.ServiceInstanceBinding;
-import org.hibernate.validator.constraints.NotEmpty;
 
 import java.util.Map;
 
@@ -17,8 +12,6 @@ import java.util.Map;
  * @author sgreenberg@gopivotal.com
  * @author <A href="mailto:josh@joshlong.com">Josh Long</A>
  */
-@JsonAutoDetect(getterVisibility = JsonAutoDetect.Visibility.NONE)
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class ServiceInstanceBindingResponse {
 
 	ServiceInstanceBinding binding;
@@ -29,16 +22,12 @@ public class ServiceInstanceBindingResponse {
 		this.binding = binding;
 	}
 
-	@NotEmpty
-	@JsonSerialize
 	@JsonProperty("credentials")
-	public Map<String, Object> getCredentials() {
+	public Map<String, String> getCredentials() {
 		return binding.getCredentials();
 	}
 
-	@JsonSerialize
 	@JsonProperty("syslog_drain_url")
-	@JsonInclude(JsonInclude.Include.NON_NULL)
 	public String getSyslogDrainUrl() {
 		return binding.getSyslogDrainUrl();
 	}

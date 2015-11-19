@@ -1,11 +1,13 @@
 package org.cloudfoundry.community.servicebroker.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import org.cloudfoundry.community.servicebroker.catalog.ServiceInstanceBinding;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -39,7 +41,8 @@ public class ServiceInstanceBindingResponseTest {
     @Test
     public void testGetSyslogDrainUrlWithNull() throws Exception {
         when(this.serviceInstanceBinding.getSyslogDrainUrl()).thenReturn(null);
-        String result = objectWriter.writeValueAsString(this.serviceInstanceBindingResponse);
+        ObjectMapper objectMapper = Jackson2ObjectMapperBuilder.json().serializationInclusion(JsonInclude.Include.NON_NULL).build();
+        String result = objectMapper.writeValueAsString(this.serviceInstanceBindingResponse);
         assertEquals(result, "{\"credentials\":{}}");
         verify(this.serviceInstanceBinding).getSyslogDrainUrl();
     }

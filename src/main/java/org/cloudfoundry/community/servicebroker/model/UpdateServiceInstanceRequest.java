@@ -1,29 +1,20 @@
 package org.cloudfoundry.community.servicebroker.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import org.apache.commons.beanutils.BeanUtils;
+
 import java.util.Map;
 import java.util.Objects;
-
-import org.apache.commons.beanutils.BeanUtils;
-import org.hibernate.validator.constraints.NotEmpty;
-
-import com.fasterxml.jackson.annotation.*;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 /**
  * A request sent by the cloud controller to update an instance of a service.
  * 
  */
-@JsonAutoDetect(getterVisibility = JsonAutoDetect.Visibility.NONE)
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class UpdateServiceInstanceRequest {
 
-	@NotEmpty
-	@JsonSerialize
 	@JsonProperty("plan_id")
 	private String planId;
-
-	@JsonSerialize
-	@JsonProperty("parameters")
 	private Map<String, Object> parameters;
 	
 	@JsonIgnore

@@ -40,13 +40,25 @@ public class ServiceInstanceController extends BaseController {
 
     @RequestMapping(value = BASE_PATH + "/{instanceId}/last_operation", method = RequestMethod.GET)
     public ResponseEntity<ServiceInstanceStateResponse> getLastServiceInstanceOperation(@PathVariable("instanceId") String serviceInstanceId)
-            throws ServiceDefinitionDoesNotExistException, ServiceInstanceExistsException, ServiceBrokerException {
+            throws ServiceDefinitionDoesNotExistException, ServiceInstanceExistsException, ServiceBrokerException, ServiceInstanceDoesNotExistException {
 
         logger.debug("GET: " + BASE_PATH + "/{instanceId}/last_operation, getLastServiceInstanceOperation(), serviceInstanceId = " + serviceInstanceId);
         ServiceInstance instance = service.getServiceInstance(serviceInstanceId);
         logger.debug("Get ServiceInstance State: " + instance.getServiceInstanceId());
         return new ResponseEntity<>(
                 new ServiceInstanceStateResponse("succeeded", "Service created"),
+                HttpStatus.OK);
+    }
+
+    @RequestMapping(value = BASE_PATH + "/{instanceId}", method = RequestMethod.GET)
+    public ResponseEntity<ServiceInstance> getServiceInstance(@PathVariable("instanceId") String serviceInstanceId)
+            throws ServiceDefinitionDoesNotExistException, ServiceInstanceExistsException, ServiceBrokerException, ServiceInstanceDoesNotExistException {
+
+        logger.debug("GET: " + BASE_PATH + "/{instanceId}, getServiceInstance(), serviceInstanceId = " + serviceInstanceId);
+        ServiceInstance instance = service.getServiceInstance(serviceInstanceId);
+        logger.debug("Get ServiceInstance: " + instance.getServiceInstanceId());
+        return new ResponseEntity<>(
+                instance,
                 HttpStatus.OK);
     }
 
@@ -72,10 +84,10 @@ public class ServiceInstanceController extends BaseController {
     }
 
     @RequestMapping(value = BASE_PATH + "/{instanceId}", method = RequestMethod.DELETE)
-    public ResponseEntity<String> deleteServiceInstance(
+    public ResponseEntity<?> deleteServiceInstance(
             @PathVariable("instanceId") String instanceId,
             @RequestParam("service_id") String serviceId,
-            @RequestParam("plan_id") String planId) throws ServiceBrokerException {
+            @RequestParam("plan_id") String planId) throws ServiceBrokerException, ServiceInstanceDoesNotExistException {
         logger.debug("DELETE: " + BASE_PATH + "/{instanceId}"
                 + ", deleteServiceInstanceBinding(), serviceInstanceId = " + instanceId
                 + ", serviceId = " + serviceId

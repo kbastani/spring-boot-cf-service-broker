@@ -28,7 +28,7 @@ public interface ServiceInstanceService {
 	 * @param serviceInstanceId The id of the serviceInstance
 	 * @return The ServiceInstance with the given id or null if one does not exist
 	 */
-	ServiceInstance getServiceInstance(String serviceInstanceId);
+	ServiceInstance getServiceInstance(String serviceInstanceId) throws ServiceInstanceDoesNotExistException;
 	
 	/**
 	 * Delete and return the instance if it exists.
@@ -36,8 +36,8 @@ public interface ServiceInstanceService {
 	 * @return The deleted ServiceInstance or null if one did not exist.
 	 * @throws ServiceBrokerException is something goes wrong internally
 	 */
-	ServiceInstance deleteServiceInstance(DeleteServiceInstanceRequest deleteServiceInstanceRequest) 
-			throws ServiceBrokerException;
+	ServiceInstance deleteServiceInstance(DeleteServiceInstanceRequest deleteServiceInstanceRequest)
+            throws ServiceBrokerException, ServiceInstanceDoesNotExistException;
 
 	/**
 	 * Update a service instance. Only modification of service plan is supported.

@@ -11,10 +11,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
+import org.springframework.core.env.Environment;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
+import java.util.Arrays;
 import java.util.Collections;
-import java.util.UUID;
 
 
 /**
@@ -24,18 +25,23 @@ import java.util.UUID;
  * @author kbastani
  */
 @SpringBootApplication
-public class DefaultApplication {
-    public static void main(String[] args) {
-        new SpringApplicationBuilder(DefaultApplication.class).web(true).run(args);
-    }
+public class ServiceBrokerApplication {
 
     @Autowired
-    ServiceDefinitionRepository serviceDefinitionRepository;
+    private ServiceDefinitionRepository serviceDefinitionRepository;
+
+    @Autowired
+    private Environment environment;
+
+    public static void main(String[] args) {
+        new SpringApplicationBuilder(ServiceBrokerApplication.class).web(true).run(args);
+    }
 
     @Bean
     @Primary
     public ObjectMapper jacksonObjectMapper(Jackson2ObjectMapperBuilder builder) {
-        return builder.json().defaultViewInclusion(false)
+        return builder.json()
+                .defaultViewInclusion(false)
                 .autoDetectFields(true)
                 .indentOutput(true)
                 .serializationInclusion(JsonInclude.Include.NON_NULL)
@@ -44,14 +50,16 @@ public class DefaultApplication {
 
     @Bean
     CommandLineRunner commandLineRunner() {
-        return new CommandLineRunner() {
-            @Override
-            public void run(String... strings) throws Exception {
-                Plan plan = new Plan(UUID.randomUUID().toString(), "Standard", "The standard scheduler");
-                ServiceDefinition serviceDefinition = new ServiceDefinition(UUID.randomUUID().toString(), "scheduler", "A scheduler", true, Collections.singleton(plan));
-                serviceDefinition.setTags(null);
+        return strings -> {
+
+            // Initialize the service broker definition when running in cloud profile
+            if (Arrays.asList(environment.getActiveProfiles()).contains("cloud")) {
+                // Initialize a default service definition for the purpose of this example
+                Plan plan = new Plan("standard", "The standard scheduler");
+                ServiceDefinition serviceDefinition = new ServiceDefinition("scheduler", "A scheduler", true, Collections.singleton(plan));
                 serviceDefinitionRepository.save(serviceDefinition);
             }
         };
     }
+
 }

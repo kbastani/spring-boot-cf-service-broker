@@ -1,14 +1,31 @@
 package org.cloudfoundry.community.servicebroker.service;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.cloudfoundry.community.servicebroker.catalog.ServiceInstanceBinding;
 import org.cloudfoundry.community.servicebroker.exception.ServiceBrokerException;
 import org.cloudfoundry.community.servicebroker.exception.ServiceInstanceBindingExistsException;
 import org.cloudfoundry.community.servicebroker.model.CreateServiceInstanceBindingRequest;
 import org.cloudfoundry.community.servicebroker.model.DeleteServiceInstanceBindingRequest;
-import org.cloudfoundry.community.servicebroker.catalog.ServiceInstanceBinding;
+import org.cloudfoundry.community.servicebroker.repositories.ServiceInstanceBindingRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class ServiceInstanceBindingServiceImpl implements ServiceInstanceBindingService {
+
+    Log log = LogFactory.getLog(ServiceInstanceBindingService.class);
+
+    private ServiceInstanceBindingRepository serviceInstanceBindingRepository;
+
+    @Autowired
+    public ServiceInstanceBindingServiceImpl(ServiceInstanceBindingRepository serviceInstanceBindingRepository) {
+        this.serviceInstanceBindingRepository = serviceInstanceBindingRepository;
+    }
+
     /**
      * Create a new binding to a service instance.
      *
@@ -19,7 +36,31 @@ public class ServiceInstanceBindingServiceImpl implements ServiceInstanceBinding
      */
     @Override
     public ServiceInstanceBinding createServiceInstanceBinding(CreateServiceInstanceBindingRequest createServiceInstanceBindingRequest) throws ServiceInstanceBindingExistsException, ServiceBrokerException {
-        return new ServiceInstanceBinding(createServiceInstanceBindingRequest.getBindingId(), createServiceInstanceBindingRequest.getServiceInstanceId(), null, null, createServiceInstanceBindingRequest.getAppGuid());
+
+        ServiceInstanceBinding serviceInstanceBinding = serviceInstanceBindingRepository.findOne(createServiceInstanceBindingRequest.getBindingId());
+
+        if (serviceInstanceBinding != null)
+            throw new ServiceInstanceBindingExistsException(serviceInstanceBinding);
+
+        // Test credentials
+        Map<String, String> credentials;
+        credentials = new HashMap<>();
+        credentials.put("uri", "uri");
+        credentials.put("username", "username");
+        credentials.put("password", "password");
+
+        serviceInstanceBinding = new ServiceInstanceBinding(createServiceInstanceBindingRequest.getBindingId(),
+                createServiceInstanceBindingRequest.getServiceInstanceId(),
+                credentials, null, createServiceInstanceBindingRequest.getAppGuid());
+
+        try {
+            serviceInstanceBinding = serviceInstanceBindingRepository.save(serviceInstanceBinding);
+        } catch (Exception ex) {
+            log.error(ex);
+            throw new ServiceBrokerException(ex);
+        }
+
+        return serviceInstanceBinding;
     }
 
     /**
@@ -32,6 +73,20 @@ public class ServiceInstanceBindingServiceImpl implements ServiceInstanceBinding
      */
     @Override
     public ServiceInstanceBinding deleteServiceInstanceBinding(DeleteServiceInstanceBindingRequest deleteServiceInstanceBindingRequest) throws ServiceBrokerException {
-        return null;
+        ServiceInstanceBinding serviceInstanceBinding;
+
+        if (!serviceInstanceBindingRepository.exists(deleteServiceInstanceBindingRequest.getBindingId())) {
+            throw new ServiceBrokerException(String.format("Service instance binding does not exist: %s", deleteServiceInstanceBindingRequest.getBindingId()));
+        } else {
+            serviceInstanceBinding = serviceInstanceBindingRepository.findOne(deleteServiceInstanceBindingRequest.getBindingId());
+        }
+
+        try {
+            serviceInstanceBindingRepository.delete(deleteServiceInstanceBindingRequest.getBindingId());
+        } catch (Exception ex) {
+            log.error(ex);
+        }
+
+        return serviceInstanceBinding;
     }
 }

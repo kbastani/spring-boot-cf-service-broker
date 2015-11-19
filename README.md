@@ -29,11 +29,11 @@ Create a new project for your broker and include the following in your `build.gr
         ...
     }
 
-The value of `springBootCfServiceBrokerVersion` corresponds to the service broker API you want write to (example 2.3).
+The value of `springBootCfServiceBrokerVersion` corresponds to the service broker API you want write to (example 2.7).
 
 ## Latest
 
-springBootCfServiceBrokerVersion: 2.5.0
+springBootCfServiceBrokerVersion: 2.7.0
 
 # Configuring the broker
 

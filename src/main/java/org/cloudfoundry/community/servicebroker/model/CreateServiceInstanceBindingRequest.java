@@ -1,15 +1,13 @@
 package org.cloudfoundry.community.servicebroker.model;
 
-import java.util.Map;
-import java.util.Objects;
-
-import org.apache.commons.beanutils.BeanUtils;
-import org.hibernate.validator.constraints.NotEmpty;
-
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import org.hibernate.validator.constraints.NotEmpty;
+
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * Request sent from the cloud controller to bind to a service 
@@ -93,16 +91,6 @@ public class CreateServiceInstanceBindingRequest {
 
 	public Map<String, Object> getParameters() {
 		return parameters;
-	}
-
-	public <T> T getParameters(Class<T> cls) {
-		try {
-			T bean = cls.newInstance();
-			BeanUtils.populate(bean, parameters);
-			return bean;
-		} catch (Exception e) {
-			throw new IllegalArgumentException("Error mapping parameters to class of type " + cls.getName());
-		}
 	}
 
 	public void setParameters(Map<String, Object> parameters) {

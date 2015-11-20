@@ -1,14 +1,14 @@
 package org.cloudfoundry.community.servicebroker.model;
 
-import java.util.Map;
-import java.util.Objects;
-
-import org.apache.commons.beanutils.BeanUtils;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.cloudfoundry.community.servicebroker.catalog.ServiceDefinition;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import com.fasterxml.jackson.annotation.*;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * A request sent by the cloud controller to create a new instance
@@ -104,16 +104,6 @@ public class CreateServiceInstanceRequest {
 
 	public Map<String, Object> getParameters() {
 		return parameters;
-	}
-
-	public <T> T getParameters(Class<T> cls) {
-		try {
-			T bean = cls.newInstance();
-			BeanUtils.populate(bean, parameters);
-			return bean;
-		} catch (Exception e) {
-			throw new IllegalArgumentException("Error mapping parameters to class of type " + cls.getName());
-		}
 	}
 
 	public void setParameters(Map<String, Object> parameters) {

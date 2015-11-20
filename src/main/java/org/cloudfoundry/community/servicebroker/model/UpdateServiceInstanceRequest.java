@@ -2,7 +2,6 @@ package org.cloudfoundry.community.servicebroker.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.apache.commons.beanutils.BeanUtils;
 
 import java.util.Map;
 import java.util.Objects;
@@ -42,16 +41,6 @@ public class UpdateServiceInstanceRequest {
 
 	public Map<String, Object> getParameters() {
 		return parameters;
-	}
-
-	public <T> T getParameters(Class<T> cls) throws IllegalArgumentException {
-		try {
-			T bean = cls.newInstance();
-			BeanUtils.populate(bean, parameters);
-			return bean;
-		} catch (Exception e) {
-			throw new IllegalArgumentException("Error mapping parameters to class of type " + cls.getName());
-		}
 	}
 
 	public void setParameters(Map<String, Object> parameters) {

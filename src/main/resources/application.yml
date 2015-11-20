@@ -1,28 +1,30 @@
 spring:
   profiles:
     active: cloud
-  application:
-    name: spring-cloud-service-broker
+---
+spring:
+  profiles: cloud
+  jpa:
+    database: MYSQL
+    hibernate:
+      ddl-auto: create
+application:
+  name: service-broker
+cloudfoundry:
+  apiEndpoint: http://api.bosh-lite.com    # Location of the CloudFoundry REST API endpoint to use.
+  domain: bosh-lite.com                    # The domain to use when mapping routes for applications.
+  organization: kbastani                   # The organization to use when registering new applications.
+  password: admin                          # Password to use to authenticate against the Cloud Foundry API.
+  services: scheduler-db                   # The names of services to bind to each application deployed as a module.
+  skipSslValidation: true                  # Allow operation using self-signed certificates.
+  space: ${vcap.application.space_name:development}   # The space to use when registering new applications.
+  username: admin                          # Username to use to authenticate against the Cloud Foundry API.
+
 management:
   contextPath: /management
 security:
   basic:
     enabled: true
----
-spring:
-  profiles: cloud
-  jpa:
-    hibernate:
-      ddl-auto: create
-cloudfoundry:
-  apiEndpoint: http://api.bosh-lite.com    # Location of the CloudFoundry REST API endpoint to use.
-  domain: bosh-lite.com                    # The domain to use when mapping routes for applications.
-  organization: org                        # The organization to use when registering new applications.
-  password: admin                          # Password to use to authenticate against the Cloud Foundry API.
-  services: redis                          # The names of services to bind to each application deployed as a module.
-  skipSslValidation: true                  # Allow operation using self-signed certificates.
-  space: ${vcap.application.space_name:development}   # The space to use when registering new applications.
-  username: admin                          # Username to use to authenticate against the Cloud Foundry API.
 ---
 spring:
   profiles: test
